@@ -1,0 +1,2 @@
+var request=require("request");
+module.exports=function(b){b.registerMultiTask("http","Sends a HTTP request and deals with the response.",function(){var a=this.data,e=this.async(),c=!1;a.dest&&(c=a.dest,delete a.dest);a.url||b.fail.fatal("The http task requires a URL");b.log.subhead("Request");b.log.writeln(JSON.stringify(a,null,2));var f=c;request(a,function(a,d,c){b.log.subhead("Response");if(a)return e(a);if(200>d.statusCode||299<d.statusCode)return e(d.statusCode);b.log.ok(d.statusCode);f&&b.file.write(f,c);e()})})};

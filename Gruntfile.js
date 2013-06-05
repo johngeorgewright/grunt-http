@@ -30,22 +30,18 @@ module.exports = function(grunt) {
 
     // Configuration to be run (and then tested).
     http: {
-      default_options: {
-        options: {
+      closure: {
+        qs: {
+          output_info: 'compiled_code',
+          output_format: 'text',
+          compilation_level: 'SIMPLE_OPTIMIZATIONS',
+          warning_level: 'default',
+          js_code: grunt.file.read('tasks/http.js')
         },
-        files: {
-          'tmp/default_options': ['test/fixtures/testing', 'test/fixtures/123'],
-        },
-      },
-      custom_options: {
-        options: {
-          separator: ': ',
-          punctuation: ' !!!',
-        },
-        files: {
-          'tmp/custom_options': ['test/fixtures/testing', 'test/fixtures/123'],
-        },
-      },
+        url: 'http://closure-compiler.appspot.com/compile',
+        method: 'POST',
+        dest: 'tmp/compiled.js'
+      }
     },
 
     // Unit tests.

@@ -8,43 +8,53 @@
 
 'use strict';
 
-module.exports = function(grunt) {
+var request = require('request');
 
-  // Please see the Grunt documentation for more information regarding task
-  // creation: http://gruntjs.com/creating-tasks
+module.exports = function (grunt) {
 
-  grunt.registerMultiTask('http', 'Sends a HTTP request and deals with the response.', function() {
-    // Merge task-specific and/or target-specific options with these defaults.
-    var options = this.options({
-      punctuation: '.',
-      separator: ', '
-    });
+  function responseHandler (done, dest) {
+    return function (error, response, body) {
 
-    // Iterate over all specified file groups.
-    this.files.forEach(function(f) {
-      // Concat specified files.
-      var src = f.src.filter(function(filepath) {
-        // Warn on and remove invalid source files (if nonull was set).
-        if (!grunt.file.exists(filepath)) {
-          grunt.log.warn('Source file "' + filepath + '" not found.');
-          return false;
-        } else {
-          return true;
-        }
-      }).map(function(filepath) {
-        // Read file source.
-        return grunt.file.read(filepath);
-      }).join(grunt.util.normalizelf(options.separator));
+      grunt.log.subhead('Response');
 
-      // Handle options.
-      src += options.punctuation;
+      if (error) {
+        return done(error);
+      } else if (response.statusCode < 200 || response.statusCode > 299) {
+        return done(response.statusCode);
+      }
 
-      // Write the destination file.
-      grunt.file.write(f.dest, src);
+      grunt.log.ok(response.statusCode);
 
-      // Print a success message.
-      grunt.log.writeln('File "' + f.dest + '" created.');
-    });
+      if (dest) {
+        grunt.file.write(dest, body);
+      }
+
+      done();
+
+    };
+  }
+
+  grunt.registerMultiTask('http', 'Sends a HTTP request and deals with the response.', function () {
+
+    var data = this.data,
+        done = this.async(),
+        dest = false;
+
+    if (data.dest) {
+      dest = data.dest;
+      delete data.dest;
+    }
+
+    if (!data.url) {
+      grunt.fail.fatal('The http task requires a URL');
+    }
+
+    grunt.log.subhead('Request');
+    grunt.log.writeln(JSON.stringify(data, null, 2));
+
+    request(data, responseHandler(done, dest));
+
   });
 
 };
+
