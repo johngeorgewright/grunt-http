@@ -31,7 +31,7 @@ module.exports = function(grunt) {
     // Configuration to be run (and then tested).
     http: {
       closure: {
-        qs: {
+        form: {
           output_info: 'compiled_code',
           output_format: 'text',
           compilation_level: 'SIMPLE_OPTIMIZATIONS',

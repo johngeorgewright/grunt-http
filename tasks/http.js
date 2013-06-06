@@ -18,8 +18,10 @@ module.exports = function (grunt) {
       grunt.log.subhead('Response');
 
       if (error) {
+        grunt.fail.fatal(error);
         return done(error);
       } else if (response.statusCode < 200 || response.statusCode > 299) {
+        grunt.fail.fatal(response.statusCode);
         return done(response.statusCode);
       }
 

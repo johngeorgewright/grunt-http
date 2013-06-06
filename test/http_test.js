@@ -10,7 +10,7 @@ exports.http = {
     test.equal(
       grunt.file.read('tmp/compiled.js'),
       grunt.file.read('test/fixtures/compiled.js'),
-      'gruntjs.com has different content to what\'s been downloaded'
+      'different content to what\'s been downloaded'
     );
     test.done();
   }
