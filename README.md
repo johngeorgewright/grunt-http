@@ -72,7 +72,7 @@ grunt.initConfig({
     closure: {
       url: 'http://closure-compiler.appspot.com/compile',
       method: 'POST',
-      qs: {
+      form: {
         output_info: 'compiled_code',
         output_format: 'text',
         compilation_level: 'SIMPLE_OPTIMIZATIONS',
@@ -89,4 +89,5 @@ grunt.initConfig({
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
-_(Nothing yet)_
+v0.0.1 - Initial release
+v0.0.2 - Fixing debugging problems
