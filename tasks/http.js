@@ -12,15 +12,17 @@ var request = require('request');
 
 module.exports = function (grunt) {
 
-  function responseHandler (done, dest) {
+  function responseHandler (done, dest, ignoreErrors) {
     return function (error, response, body) {
+
+      response = response || { statusCode: 0 };
 
       grunt.log.subhead('Response');
 
-      if (error) {
+      if (error && !ignoreErrors) {
         grunt.fail.fatal(error);
         return done(error);
-      } else if (response.statusCode < 200 || response.statusCode > 299) {
+      } else if (!ignoreErrors && (response.statusCode < 200 || response.statusCode > 299)) {
         grunt.fail.fatal(response.statusCode);
         return done(response.statusCode);
       }
@@ -32,7 +34,6 @@ module.exports = function (grunt) {
       }
 
       done();
-
     };
   }
 
@@ -54,7 +55,7 @@ module.exports = function (grunt) {
     grunt.log.subhead('Request');
     grunt.log.writeln(JSON.stringify(data, null, 2));
 
-    request(data, responseHandler(done, dest));
+    request(data, responseHandler(done, dest, data.ignoreErrors));
 
   });
 
