@@ -60,6 +60,7 @@ grunt.initConfig({
 - `aws` - object containing aws signing information, should have the properties key and secret as well as bucket unless you're specifying your bucket as part of the path, or you are making a request that doesn't use a bucket (i.e. GET Services)
 - `httpSignature` - Options for the HTTP Signature Scheme using Joyent's library. The keyId and key properties must be specified. See the docs for other options.
 - `localAddress` - Local interface to bind for network connections.
+- `ignoreErrors` - Ignore the status code returned (if any).
 
 ### Usage Examples
 
