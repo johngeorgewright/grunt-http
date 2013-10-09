@@ -90,5 +90,6 @@ grunt.initConfig({
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
-v0.0.1 - Initial release
-v0.0.2 - Fixing debugging problems
+- v0.1.0 - Added the option to ignore any errors from the http response. Thanks to [https://github.com/andyroyle](andyroyle)
+- v0.0.2 - Fixing debugging problems
+- v0.0.1 - Initial release
