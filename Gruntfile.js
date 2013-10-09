@@ -41,6 +41,11 @@ module.exports = function(grunt) {
         url: 'http://closure-compiler.appspot.com/compile',
         method: 'POST',
         dest: 'tmp/compiled.js'
+      },
+      ignoreErrors: {
+        url: 'http://someurlthatdoesntexist.xx',
+        method: 'GET',
+        ignoreErrors: true
       }
     },
 
