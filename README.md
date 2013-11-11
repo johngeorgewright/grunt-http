@@ -41,6 +41,7 @@ grunt.initConfig({
 - `method` - http method, defaults to GET
 - `headers` - http headers, defaults to {}
 - `body` - entity body for PATCH, POST and PUT requests. Must be buffer or string.
+- `sourceFile` - A source file name. Overrides `body` if set.
 - `form` - when passed an object this will set body but to a querystring representation of value and adds Content-type: application/x-www-form-urlencoded; charset=utf-8 header. When passed no option a FormData instance is returned that will be piped to request.
 - `auth` - A hash containing values user || username, password || pass, and sendImmediately (optional). See documentation above.
 - `json` - sets body but to JSON representation of value and adds Content-type: application/json header. Additionally, parses the response body as json.

@@ -52,6 +52,10 @@ module.exports = function (grunt) {
       grunt.fail.fatal('The http task requires a URL');
     }
 
+    if (data.sourceFile) {
+      data.body = grunt.file.read(data.sourceFile);
+    }
+
     grunt.log.subhead('Request');
     grunt.log.writeln(JSON.stringify(data, null, 2));
 
