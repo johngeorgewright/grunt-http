@@ -39,7 +39,7 @@ module.exports = function (grunt) {
 
   grunt.registerMultiTask('http', 'Sends a HTTP request and deals with the response.', function () {
 
-    var data = this.data,
+    var data = this.options(),
         done = this.async(),
         dest = false;
 
