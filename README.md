@@ -26,8 +26,10 @@ In your project's Gruntfile, add a section named `http` to the data object passe
 grunt.initConfig({
   http: {
     your_service: {
-      url: 'your/url.com',
-      dest: 'optional/file/to/save/response'
+      options: {
+        url: 'your/url.com',
+        dest: 'optional/file/to/save/response'
+      }
     }
   }
 })
@@ -72,16 +74,18 @@ In this example, we're using google's closure service to compile a JS file.
 grunt.initConfig({
   http: {
     closure: {
-      url: 'http://closure-compiler.appspot.com/compile',
-      method: 'POST',
-      form: {
-        output_info: 'compiled_code',
-        output_format: 'text',
-        compilation_level: 'SIMPLE_OPTIMIZATIONS',
-        warning_level: 'default',
-        js_code: grunt.file.read('src/main.js')
-      },
-      dest: 'build/main.js'
+      options: {
+        url: 'http://closure-compiler.appspot.com/compile',
+        method: 'POST',
+        form: {
+          output_info: 'compiled_code',
+          output_format: 'text',
+          compilation_level: 'SIMPLE_OPTIMIZATIONS',
+          warning_level: 'default',
+          js_code: grunt.file.read('src/main.js')
+        },
+        dest: 'build/main.js'
+      }
     }
   }
 });
