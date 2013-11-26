@@ -35,6 +35,8 @@ grunt.initConfig({
 })
 ```
 
+If you add a source file, the contents will be added to the `body` option unless another field is specified in the `sourceField` option.
+
 ### Options
 
 - `uri || url` - fully qualified uri or a parsed url object from url.parse(). REQUIRED.
