@@ -28,8 +28,8 @@ grunt.initConfig({
     your_service: {
       options: {
         url: 'your/url.com',
-        dest: 'optional/file/to/save/response'
-      }
+      },
+      dest: 'optional/file/to/save/response'
     }
   }
 })
@@ -43,7 +43,7 @@ grunt.initConfig({
 - `method` - http method, defaults to GET
 - `headers` - http headers, defaults to {}
 - `body` - entity body for PATCH, POST and PUT requests. Must be buffer or string.
-- `sourceFile` - A source file name. Overrides `body` if set.
+- `sourceField` - A field in the body or form to add the source files' contents to. Can contain full stops to separate object path. Ie "form.js\_code".
 - `form` - when passed an object this will set body but to a querystring representation of value and adds Content-type: application/x-www-form-urlencoded; charset=utf-8 header. When passed no option a FormData instance is returned that will be piped to request.
 - `auth` - A hash containing values user || username, password || pass, and sendImmediately (optional). See documentation above.
 - `json` - sets body but to JSON representation of value and adds Content-type: application/json header. Additionally, parses the response body as json.
@@ -82,9 +82,11 @@ grunt.initConfig({
           output_format: 'text',
           compilation_level: 'SIMPLE_OPTIMIZATIONS',
           warning_level: 'default',
-          js_code: grunt.file.read('src/main.js')
-        },
-        dest: 'build/main.js'
+          sourceField: 'form.js_code'
+        }
+      },
+      files: {
+        'build/main.js': 'src/main.js'
       }
     }
   }
@@ -94,7 +96,5 @@ grunt.initConfig({
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
-## Release History
-- v0.1.0 - Added the option to ignore any errors from the http response. Thanks to [andyroyle](https://github.com/andyroyle)
-- v0.0.2 - Fixing debugging problems
-- v0.0.1 - Initial release
+## [Release History](/johngeorgewright/grunt-http/releases)
+
