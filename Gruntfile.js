@@ -31,21 +31,25 @@ module.exports = function(grunt) {
     // Configuration to be run (and then tested).
     http: {
       closure: {
-        form: {
-          output_info: 'compiled_code',
-          output_format: 'text',
-          compilation_level: 'SIMPLE_OPTIMIZATIONS',
-          warning_level: 'default',
-          js_code: grunt.file.read('tasks/http.js')
-        },
-        url: 'http://closure-compiler.appspot.com/compile',
-        method: 'POST',
-        dest: 'tmp/compiled.js'
+        options: {
+          form: {
+            output_info: 'compiled_code',
+            output_format: 'text',
+            compilation_level: 'SIMPLE_OPTIMIZATIONS',
+            warning_level: 'default',
+            js_code: grunt.file.read('tasks/http.js')
+          },
+          url: 'http://closure-compiler.appspot.com/compile',
+          method: 'POST',
+          dest: 'tmp/compiled.js'
+        }
       },
       ignoreErrors: {
-        url: 'http://someurlthatdoesntexist.xx',
-        method: 'GET',
-        ignoreErrors: true
+        options: {
+          url: 'http://someurlthatdoesntexist.xx',
+          method: 'GET',
+          ignoreErrors: true
+        }
       }
     },
 
