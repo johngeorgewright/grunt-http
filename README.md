@@ -38,7 +38,6 @@ grunt.initConfig({
 ### Options
 
 - `uri || url` - fully qualified uri or a parsed url object from url.parse(). REQUIRED.
-- `dest` - A destination file to save the response.
 - `qs` - object containing querystring values to be appended to the uri
 - `method` - http method, defaults to GET
 - `headers` - http headers, defaults to {}
