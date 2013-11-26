@@ -82,9 +82,9 @@ grunt.initConfig({
           output_info: 'compiled_code',
           output_format: 'text',
           compilation_level: 'SIMPLE_OPTIMIZATIONS',
-          warning_level: 'default',
-          sourceField: 'form.js_code'
-        }
+          warning_level: 'default'
+        },
+        sourceField: 'form.js_code'
       },
       files: {
         'build/main.js': 'src/main.js'
