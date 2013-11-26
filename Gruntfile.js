@@ -37,11 +37,13 @@ module.exports = function(grunt) {
             output_format: 'text',
             compilation_level: 'SIMPLE_OPTIMIZATIONS',
             warning_level: 'default',
-            js_code: grunt.file.read('tasks/http.js')
           },
           url: 'http://closure-compiler.appspot.com/compile',
           method: 'POST',
-          dest: 'tmp/compiled.js'
+          sourceField: 'form.js_code'
+        },
+        files: {
+          'tmp/compiled.js': 'tasks/http.js'
         }
       },
       ignoreErrors: {

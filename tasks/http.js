@@ -17,7 +17,7 @@ module.exports = function (grunt) {
 
       response = response || { statusCode: 0 };
 
-      grunt.log.subhead('Response');
+      grunt.verbose.subhead('Response');
 
       if (error && !ignoreErrors) {
         grunt.fail.fatal(error);
@@ -28,6 +28,7 @@ module.exports = function (grunt) {
       }
 
       grunt.log.ok(response.statusCode);
+      grunt.verbose.writeln(body);
 
       if (dest) {
         grunt.file.write(dest, body);
@@ -37,29 +38,41 @@ module.exports = function (grunt) {
     };
   }
 
+  function readFile(filepath) {
+    return grunt.file.read(filepath);
+  }
+
   grunt.registerMultiTask('http', 'Sends a HTTP request and deals with the response.', function () {
 
-    var data = this.options(),
+    var options = this.options({
+          ignoreErrors: false,
+          sourceField: 'body'
+        }),
         done = this.async(),
-        dest = false;
+        sourceField = options.sourceField,
+        sourcePath = sourceField.split('.'),
+        sourceKey = sourcePath.pop(),
+        sourceObj = options;
 
-    if (data.dest) {
-      dest = data.dest;
-      delete data.dest;
+    sourcePath.forEach(function (key) {
+      sourceObj = sourceObj[key];
+    });
+
+    if (this.files.length) {
+      this.files.forEach(function (file) {
+        var contents = file.src.map(readFile).join('\n'),
+            dest = file.dest;
+
+        sourceObj[sourceKey] = contents;
+
+        grunt.verbose.subhead('Request');
+        grunt.verbose.writeln(JSON.stringify(options, null, 2));
+
+        request(options, responseHandler(done, dest, options.ignoreErrors));
+      });
+    } else {
+      request(options, responseHandler(done, null, options.ignoreErrors));
     }
-
-    if (!data.url) {
-      grunt.fail.fatal('The http task requires a URL');
-    }
-
-    if (data.sourceFile) {
-      data.body = grunt.file.read(data.sourceFile);
-    }
-
-    grunt.log.subhead('Request');
-    grunt.log.writeln(JSON.stringify(data, null, 2));
-
-    request(data, responseHandler(done, dest, data.ignoreErrors));
 
   });
 
