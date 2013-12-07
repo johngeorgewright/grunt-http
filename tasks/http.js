@@ -60,10 +60,13 @@ module.exports = function (grunt) {
 
     if (this.files.length) {
       this.files.forEach(function (file) {
-        var contents = file.src.map(readFile).join('\n'),
-            dest = file.dest;
+        var dest = file.dest,
+            contents;
 
-        sourceObj[sourceKey] = contents;
+        if (file.src) {
+          contents = file.src.map(readFile).join('\n');
+          sourceObj[sourceKey] = contents;
+        }
 
         grunt.verbose.subhead('Request');
         grunt.verbose.writeln(JSON.stringify(options, null, 2));
