@@ -1,3 +1,1 @@
-var request=require("request");
-module.exports=function(c){function h(a,f,d){return function(g,b,e){b=b||{statusCode:0};c.verbose.subhead("Response");if(g&&!d)return c.fail.fatal(g),a(g);if(!d&&(200>b.statusCode||299<b.statusCode))return c.fail.fatal(b.statusCode),a(b.statusCode);c.log.ok(b.statusCode);c.verbose.writeln(e);f&&c.file.write(f,e);a()}}function k(a){return c.file.read(a)}c.registerMultiTask("http","Sends a HTTP request and deals with the response.",function(){var a=this.options({ignoreErrors:!1,sourceField:"body"}),
-f=this.async(),d=a.sourceField.split("."),g=d.pop(),b=a;d.forEach(function(a){b=b[a]});this.files.length?this.files.forEach(function(e){var d=e.src.map(k).join("\n");e=e.dest;b[g]=d;c.verbose.subhead("Request");c.verbose.writeln(JSON.stringify(a,null,2));request(a,h(f,e,a.ignoreErrors))}):request(a,h(f,null,a.ignoreErrors))})};
+function hello(a){alert("Hello, "+a)}hello("New user");

@@ -30,6 +30,12 @@ module.exports = function(grunt) {
 
     // Configuration to be run (and then tested).
     http: {
+      basic: {
+        options: {
+          url: 'http://www.j-g-w.info'
+        },
+        dest: 'tmp/basic.html'
+      },
       closure: {
         options: {
           form: {
@@ -43,7 +49,7 @@ module.exports = function(grunt) {
           sourceField: 'form.js_code'
         },
         files: {
-          'tmp/compiled.js': 'tasks/http.js'
+          'tmp/compiled.js': 'test/fixtures/not-compiled.js'
         }
       },
       ignoreErrors: {
