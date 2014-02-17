@@ -43,6 +43,6 @@
     "http"
   ],
   "dependencies": {
-    "request": "~2.21.0"
+    "request": "~2.33.0"
   }
 }
