@@ -2,6 +2,8 @@
 
 > Sends a HTTP request and deals with the response.
 
+[![NPM](https://nodei.co/npm/grunt-http.png)](https://nodei.co/npm/grunt-http)
+
 ## Getting Started
 This plugin requires Grunt `~0.4.1`
 
