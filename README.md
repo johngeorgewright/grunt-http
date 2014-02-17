@@ -49,7 +49,7 @@ grunt-http uses the [request](https://github.com/mikeal/request) module under th
 - `headers` - http headers, defaults to {}
 - `body` - entity body for PATCH, POST and PUT requests. Must be buffer or string.
 - `sourceField` - A field in the body or form to add the source files' contents to. Can contain full stops to separate object path. Ie "form.js\_code".
-- `form` - when passed an object this will set body but to a querystring representation of value and adds Content-type: application/x-www-form-urlencoded; charset=utf-8 header. When passed no option a FormData instance is returned that will be piped to request.
+- `form` - when passed an object this will set body but to a querystring representation of value and adds Content-type: application/x-www-form-urlencoded; charset=utf-8 header. When passed no option a FormData instance is returned that will be piped to request. For `multipart/form-data` install the optional dependency `npm i form-data`
 - `auth` - A hash containing values user || username, password || pass, and sendImmediately (optional). [See more info here](https://github.com/mikeal/request#http-authentication).
 - `json` - sets body but to JSON representation of value and adds Content-type: application/json header. Additionally, parses the response body as json.
 - `multipart` - (experimental) array of objects which contains their own headers and body attribute. Sends multipart/related request. See example below.
@@ -61,16 +61,24 @@ grunt-http uses the [request](https://github.com/mikeal/request) module under th
 - `pool.maxSockets` - Integer containing the maximum amount of sockets in the pool.
 - `timeout` - Integer containing the number of milliseconds to wait for a request to respond before aborting the request
 - `proxy` - An HTTP proxy to be used. Support proxy Auth with Basic Auth the same way it's supported with the url parameter by embedding the auth info in the uri.
-- `oauth` - Options for OAuth HMAC-SHA1 signing. [See more info here](https://github.com/mikeal/request#oauth-signing).
-- `hawk` - Options for [Hawk signing](https://github.com/hueniverse/hawk). The credentials key must contain the necessary signing info, [see hawk docs for details](https://github.com/hueniverse/hawk#usage-example).
+- `oauth` - Options for OAuth HMAC-SHA1 signing. [See more info here](https://github.com/mikeal/request#oauth-signing). The `oauth-sign` module must be installed to use this functionality.
+- `hawk` - Options for [Hawk signing](https://github.com/hueniverse/hawk). The credentials key must contain the necessary signing info, [see hawk docs for details](https://github.com/hueniverse/hawk#usage-example). You will need to install the `hawk` module to use this functionality.
 - `strictSSL` - Set to true to require that SSL certificates be valid. Note: to use your own certificate authority, you need to specify an agent that was created with that ca as an option.
-- `jar` - Set to false if you don't want cookies to be remembered for future use or define your custom cookie jar ([see mikeal/request's examples section](https://github.com/mikeal/request#examples))
-- `aws` - object containing aws signing information, should have the properties key and secret as well as bucket unless you're specifying your bucket as part of the path, or you are making a request that doesn't use a bucket (i.e. GET Services)
-- `httpSignature` - Options for the [HTTP Signature Scheme](https://github.com/joyent/node-http-signature/blob/master/http_signing.md) using [Joyent's library](https://github.com/joyent/node-http-signature). The keyId and key properties must be specified. See the docs for other options.
+- `jar` - If true, remember cookies for future use (or define your custom cookie jar; [see mikeal/request's examples](https://github.com/mikeal/request#examples)). To get either of these functions working you'll need to install an optional dependecy `npm i tough-cookie`.
+- `aws` - object containing aws signing information, should have the properties key and secret as well as bucket unless you're specifying your bucket as part of the path, or you are making a request that doesn't use a bucket (i.e. GET Services). You will need to install the `aws-sign2` module to use this functionality.
+- `httpSignature` - Options for the [HTTP Signature Scheme](https://github.com/joyent/node-http-signature/blob/master/http_signing.md) using [Joyent's library](https://github.com/joyent/node-http-signature). The `http-signature` module must be installed and the keyId and key properties must be specified.
 - `localAddress` - Local interface to bind for network connections.
 - `ignoreErrors` - Ignore the status code returned (if any).
 
-### Usage Examples
+There are a few optional dependencies you'll need to install to get certain functionality from this module.
+
+- if you wish to use cookies (`jar`) install `tough-cookie`
+- if you want to pass `multipart/form-data` you'll need to install `form-data`
+- if you wish to tunnel your requests install `tunnel-agent`
+- if you want to use Joyent's HTTP Signature Scheme, install `http-signature`
+- if you require oauth signing, you need to install the `oauth-sign` module
+- to use Hawk signing, you must use the `hawk` module
+- if you want to use AWS signing, you must install the `aws-sign2` module
 
 #### Google Closure
 In this example, we're using google's closure service to compile a JS file.
