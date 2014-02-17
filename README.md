@@ -39,6 +39,8 @@ If you add a source file, the contents will be added to the `body` option unless
 
 ### Options
 
+grunt-http uses the [request](https://github.com/mikeal/request) module under the hood, and apart from a couple specific to grunt-http options, the rest get passed straight to it. Here's a copy of the of the module's option docs. Otherwise, [go to the repo](https://github.com/mikeal/request) and have a look at what's it's capable of.
+
 - `uri || url` - fully qualified uri or a parsed url object from url.parse(). REQUIRED.
 - `qs` - object containing querystring values to be appended to the uri
 - `method` - http method, defaults to GET
@@ -46,7 +48,7 @@ If you add a source file, the contents will be added to the `body` option unless
 - `body` - entity body for PATCH, POST and PUT requests. Must be buffer or string.
 - `sourceField` - A field in the body or form to add the source files' contents to. Can contain full stops to separate object path. Ie "form.js\_code".
 - `form` - when passed an object this will set body but to a querystring representation of value and adds Content-type: application/x-www-form-urlencoded; charset=utf-8 header. When passed no option a FormData instance is returned that will be piped to request.
-- `auth` - A hash containing values user || username, password || pass, and sendImmediately (optional). See documentation above.
+- `auth` - A hash containing values user || username, password || pass, and sendImmediately (optional). [See more info here](https://github.com/mikeal/request#http-authentication).
 - `json` - sets body but to JSON representation of value and adds Content-type: application/json header. Additionally, parses the response body as json.
 - `multipart` - (experimental) array of objects which contains their own headers and body attribute. Sends multipart/related request. See example below.
 - `followRedirect` - follow HTTP 3xx responses as redirects. defaults to true.
@@ -57,12 +59,12 @@ If you add a source file, the contents will be added to the `body` option unless
 - `pool.maxSockets` - Integer containing the maximum amount of sockets in the pool.
 - `timeout` - Integer containing the number of milliseconds to wait for a request to respond before aborting the request
 - `proxy` - An HTTP proxy to be used. Support proxy Auth with Basic Auth the same way it's supported with the url parameter by embedding the auth info in the uri.
-- `oauth` - Options for OAuth HMAC-SHA1 signing, see documentation above.
-- `hawk` - Options for Hawk signing. The credentials key must contain the necessary signing info, see hawk docs for details.
+- `oauth` - Options for OAuth HMAC-SHA1 signing. [See more info here](https://github.com/mikeal/request#oauth-signing).
+- `hawk` - Options for [Hawk signing](https://github.com/hueniverse/hawk). The credentials key must contain the necessary signing info, [see hawk docs for details](https://github.com/hueniverse/hawk#usage-example).
 - `strictSSL` - Set to true to require that SSL certificates be valid. Note: to use your own certificate authority, you need to specify an agent that was created with that ca as an option.
-- `jar` - Set to false if you don't want cookies to be remembered for future use or define your custom cookie jar (see examples section)
+- `jar` - Set to false if you don't want cookies to be remembered for future use or define your custom cookie jar ([see mikeal/request's examples section](https://github.com/mikeal/request#examples))
 - `aws` - object containing aws signing information, should have the properties key and secret as well as bucket unless you're specifying your bucket as part of the path, or you are making a request that doesn't use a bucket (i.e. GET Services)
-- `httpSignature` - Options for the HTTP Signature Scheme using Joyent's library. The keyId and key properties must be specified. See the docs for other options.
+- `httpSignature` - Options for the [HTTP Signature Scheme](https://github.com/joyent/node-http-signature/blob/master/http_signing.md) using [Joyent's library](https://github.com/joyent/node-http-signature). The keyId and key properties must be specified. See the docs for other options.
 - `localAddress` - Local interface to bind for network connections.
 - `ignoreErrors` - Ignore the status code returned (if any).
 
