@@ -23,6 +23,14 @@ exports.http = {
       'different content to what\'s been downloaded'
     );
     test.done();
+  },
+
+  'it can post multipart': function (test) {
+    test.expect(1);
+    test.ok(
+      grunt.file.read('tmp/multipart.txt').match('Successfully dumped 2 post variables')
+    );
+    test.done();
   }
 
 };
