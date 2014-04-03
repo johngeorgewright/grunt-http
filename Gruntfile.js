@@ -82,5 +82,6 @@ module.exports = function(grunt) {
 
   // By default, lint and run all tests.
   grunt.registerTask('default', ['jshint', 'test']);
+  grunt.registerTask('wordpress', ['http:wordpress_login', 'http:wordpress_access']);
 
 };

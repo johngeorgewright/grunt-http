@@ -2,17 +2,18 @@
  * grunt-http
  * https://github.com/johngeorgewright/grunt-contrib-http
  *
- * Copyright (c) 2013 John Wright
+ * Copyright (c) 2014 John Wright
  * Licensed under the MIT license.
  */
 
 'use strict';
 
-var request = require('request');
+var request = require('request'),
+    async = require('async');
 
 module.exports = function (grunt) {
 
-  function responseHandler (done, dest, ignoreErrors) {
+  function responseHandler(dest, ignoreErrors, done) {
     return function (error, response, body) {
 
       response = response || { statusCode: 0 };
@@ -20,11 +21,9 @@ module.exports = function (grunt) {
       grunt.verbose.subhead('Response');
 
       if (error && !ignoreErrors) {
-        grunt.fail.fatal(error);
         return done(error);
-      } else if (!ignoreErrors && (response.statusCode < 200 || response.statusCode > 299)) {
-        grunt.fail.fatal(response.statusCode);
-        return done(response.statusCode);
+      } else if (!ignoreErrors && (response.statusCode < 200 || response.statusCode > 399)) {
+        return done(response.statusCode + " " + body);
       }
 
       grunt.log.ok(response.statusCode);
@@ -44,7 +43,8 @@ module.exports = function (grunt) {
 
   grunt.registerMultiTask('http', 'Sends a HTTP request and deals with the response.', function () {
 
-    var options = this.options({
+    var _this = this,
+        options = this.options({
           ignoreErrors: false,
           sourceField: 'body'
         }),
@@ -52,13 +52,34 @@ module.exports = function (grunt) {
         sourceField = options.sourceField,
         sourcePath = sourceField.split('.'),
         sourceKey = sourcePath.pop(),
-        sourceObj = options;
+        sourceObj = options,
+        formCallback = typeof options.form === 'function' ? options.form : null,
+        dests = [];
 
     sourcePath.forEach(function (key) {
       sourceObj = sourceObj[key];
     });
 
+    if (formCallback) {
+      delete options.form;
+    }
+
+    function call(dest, next) {
+      var r = request(options, responseHandler(dest, options.ignoreErrors, next));
+      if (formCallback) {
+        formCallback(r.form());
+      }
+    }
+
+    function resolve(err) {
+      if (err) {
+        grunt.fail.fatal(err);
+      }
+      done();
+    }
+
     if (this.files.length) {
+
       this.files.forEach(function (file) {
         var dest = file.dest,
             contents;
@@ -71,12 +92,16 @@ module.exports = function (grunt) {
         grunt.verbose.subhead('Request');
         grunt.verbose.writeln(JSON.stringify(options, null, 2));
 
-        request(options, responseHandler(done, dest, options.ignoreErrors));
+        dests.push(dest);
       });
-    } else {
-      request(options, responseHandler(done, null, options.ignoreErrors));
-    }
 
+      async.each(dests, call, resolve);
+
+    } else {
+
+      call(null, resolve);
+
+    }
   });
 
 };
