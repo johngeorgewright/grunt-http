@@ -9,7 +9,8 @@
 'use strict';
 
 var request = require('request'),
-    async = require('async');
+    async = require('async'),
+    FormData = require('form-data');
 
 module.exports = function (grunt) {
 
@@ -43,8 +44,7 @@ module.exports = function (grunt) {
 
   grunt.registerMultiTask('http', 'Sends a HTTP request and deals with the response.', function () {
 
-    var _this = this,
-        options = this.options({
+    var options = this.options({
           ignoreErrors: false,
           sourceField: 'body'
         }),
@@ -73,12 +73,14 @@ module.exports = function (grunt) {
     }
 
     function call(file, next) {
-      var r;
+      var r, callback, form;
       file = file || {};
       configureSource(file);
-      r = request(options, responseHandler(file.dest, options.ignoreErrors, next));
+      callback = responseHandler(file.dest, options.ignoreErrors, next);
+      r = request(options, callback);
       if (formCallback) {
-        formCallback(r.form());
+        form = r.form();
+        formCallback(form);
       }
     }
 
@@ -111,6 +113,7 @@ module.exports = function (grunt) {
     } else {
       call(null, resolve);
     }
+
   });
 
 };

@@ -8,6 +8,10 @@
 
 'use strict';
 
+var fs = require('fs'),
+    path = require('path'),
+    FormData = require('form-data');
+
 module.exports = function(grunt) {
 
   // Project configuration.
@@ -58,6 +62,17 @@ module.exports = function(grunt) {
           method: 'GET',
           ignoreErrors: true
         }
+      },
+      multipart: {
+        options: {
+          url: 'http://posttestserver.com/post.php?dir=grunt-http',
+          method: 'POST',
+          form: function (form) {
+            form.append('buffer', new Buffer([1, 2, 3]));
+            form.append('file', grunt.file.read(path.join(__dirname, 'test', 'fixtures', 'image.jpg')));
+          }
+        },
+        dest: 'tmp/multipart.txt'
       }
     },
 
