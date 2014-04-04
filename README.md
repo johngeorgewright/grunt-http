@@ -106,6 +106,29 @@ grunt.initConfig({
 });
 ```
 
+#### multipart/form-data
+In this example we're going to access the form data object directly to add an image to the POST fields.
+
+*Note, you need to install the `form-data` package before you can use this method.*
+
+```js
+var path = require('path');
+
+grunt.initConfig({
+  http: {
+    multipart: {
+      options: {
+        url: 'http://posttestserver.com/post.php?dir=grunt-http',
+        method: 'POST',
+        form: function (form) {
+          form.append('file', grunt.file.read(path.join(__dirname, 'images', 'pic.png')));
+        }
+      }
+    }
+  }
+});
+```
+
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
