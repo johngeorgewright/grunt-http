@@ -54,7 +54,7 @@ module.exports = function (grunt) {
         sourceKey = sourcePath.pop(),
         sourceObj = options,
         formCallback = typeof options.form === 'function' ? options.form : null,
-        dests = [];
+        files = [];
 
     sourcePath.forEach(function (key) {
       sourceObj = sourceObj[key];
@@ -64,8 +64,19 @@ module.exports = function (grunt) {
       delete options.form;
     }
 
-    function call(dest, next) {
-      var r = request(options, responseHandler(dest, options.ignoreErrors, next));
+    function configureSource(file) {
+      if (file.src) {
+        sourceObj[sourceKey] = file.src;
+      } else if (sourceObj[sourceKey]) {
+        delete sourceObj[sourceKey];
+      }
+    }
+
+    function call(file, next) {
+      var r;
+      file = file || {};
+      configureSource(file);
+      r = request(options, responseHandler(file.dest, options.ignoreErrors, next));
       if (formCallback) {
         formCallback(r.form());
       }
@@ -78,29 +89,27 @@ module.exports = function (grunt) {
       done();
     }
 
-    if (this.files.length) {
+    function addToFilesArray(file) {
+      var contents;
 
-      this.files.forEach(function (file) {
-        var dest = file.dest,
-            contents;
+      if (file.src) {
+        contents = file.src.map(readFile).join('\n');
+      }
 
-        if (file.src) {
-          contents = file.src.map(readFile).join('\n');
-          sourceObj[sourceKey] = contents;
-        }
+      grunt.verbose.subhead('Request');
+      grunt.verbose.writeln(JSON.stringify(options, null, 2));
 
-        grunt.verbose.subhead('Request');
-        grunt.verbose.writeln(JSON.stringify(options, null, 2));
-
-        dests.push(dest);
+      files.push({
+        src: contents,
+        dest: file.dest
       });
+    }
 
-      async.each(dests, call, resolve);
-
+    if (this.files.length) {
+      this.files.forEach(addToFilesArray);
+      async.each(files, call, resolve);
     } else {
-
       call(null, resolve);
-
     }
   });
 
