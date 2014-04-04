@@ -49,7 +49,7 @@ grunt-http uses the [request](https://github.com/mikeal/request) module under th
 - `headers` - http headers, defaults to {}
 - `body` - entity body for PATCH, POST and PUT requests. Must be buffer or string.
 - `sourceField` - A field in the body or form to add the source files' contents to. Can contain full stops to separate object path. Ie "form.js\_code".
-- `form` - when passed an object this will set body but to a querystring representation of value and adds Content-type: application/x-www-form-urlencoded; charset=utf-8 header. When passed no option a FormData instance is returned that will be piped to request. For `multipart/form-data` install the optional dependency `npm i form-data`
+- `form` - When passed an object, this sets body to a querystring representation of value, and adds Content-type: application/x-www-form-urlencoded; charset=utf-8 header. When passed no options, a FormData instance is returned (and is piped to request). For `multipart/form-data` install the optional dependency `npm i form-data`.
 - `auth` - A hash containing values user || username, password || pass, and sendImmediately (optional). [See more info here](https://github.com/mikeal/request#http-authentication).
 - `json` - sets body but to JSON representation of value and adds Content-type: application/json header. Additionally, parses the response body as json.
 - `multipart` - (experimental) array of objects which contains their own headers and body attribute. Sends multipart/related request. See example below.
@@ -100,6 +100,29 @@ grunt.initConfig({
       },
       files: {
         'build/main.js': 'src/main.js'
+      }
+    }
+  }
+});
+```
+
+#### multipart/form-data
+In this example we're going to access the form data object directly to add an image to the POST fields.
+
+*Note, you need to install the `form-data` package before you can use this method.*
+
+```js
+var path = require('path');
+
+grunt.initConfig({
+  http: {
+    multipart: {
+      options: {
+        url: 'http://posttestserver.com/post.php?dir=grunt-http',
+        method: 'POST',
+        form: function (form) {
+          form.append('file', grunt.file.read(path.join(__dirname, 'images', 'pic.png')));
+        }
       }
     }
   }
