@@ -44,6 +44,7 @@ If you add a source file, the contents will be added to the `body` option unless
 grunt-http uses the [request](https://github.com/mikeal/request) module under the hood, and apart from a couple specific to grunt-http options, the rest get passed straight to it. Here's a copy of the of the module's option docs. Otherwise, [go to the repo](https://github.com/mikeal/request) and have a look at what's it's capable of.
 
 - `uri || url` - fully qualified uri or a parsed url object from url.parse(). REQUIRED.
+- `callback` - A function that will receive an `error`, `response` and `body`, after a response if finished
 - `qs` - object containing querystring values to be appended to the uri
 - `method` - http method, defaults to GET
 - `headers` - http headers, defaults to {}

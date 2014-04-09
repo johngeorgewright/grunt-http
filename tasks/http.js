@@ -34,7 +34,7 @@ module.exports = function (grunt) {
         grunt.file.write(dest, body);
       }
 
-      done();
+      done(error, response, body);
     };
   }
 
@@ -54,6 +54,7 @@ module.exports = function (grunt) {
         sourceKey = sourcePath.pop(),
         sourceObj = options,
         formCallback = typeof options.form === 'function' ? options.form : null,
+        callback = options.callback,
         files = [];
 
     sourcePath.forEach(function (key) {
@@ -62,6 +63,10 @@ module.exports = function (grunt) {
 
     if (formCallback) {
       delete options.form;
+    }
+
+    if (callback && typeof callback !== 'function') {
+      throw new Error('`callback` option must be a function');
     }
 
     function configureSource(file) {
@@ -84,11 +89,14 @@ module.exports = function (grunt) {
       }
     }
 
-    function resolve(err) {
+    function resolve(err, response, body) {
+      if (callback) {
+        callback(err, response, body);
+      }
       if (err) {
         grunt.fail.fatal(err);
       }
-      done();
+      done(err);
     }
 
     function addToFilesArray(file) {

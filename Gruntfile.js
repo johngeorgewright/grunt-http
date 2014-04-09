@@ -10,7 +10,8 @@
 
 var fs = require('fs'),
     path = require('path'),
-    FormData = require('form-data');
+    FormData = require('form-data'),
+    util = require('util');
 
 module.exports = function(grunt) {
 
@@ -73,6 +74,16 @@ module.exports = function(grunt) {
           }
         },
         dest: 'tmp/multipart.txt'
+      },
+      callback: {
+        options: {
+          url: 'http://www.j-g-w.info',
+          callback: function (error, response, body) {
+            grunt.file.write('tmp/callback.error', util.inspect(error));
+            grunt.file.write('tmp/callback.response', util.inspect(response));
+            grunt.file.write('tmp/callback.body', util.inspect(body));
+          }
+        }
       }
     },
 

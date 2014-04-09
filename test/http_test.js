@@ -1,7 +1,6 @@
 'use strict';
 
-var request = require('request'),
-    grunt = require('grunt');
+var grunt = require('grunt');
 
 exports.http = {
 
@@ -30,6 +29,17 @@ exports.http = {
     test.ok(
       grunt.file.read('tmp/multipart.txt').match('Successfully dumped 2 post variables')
     );
+    test.done();
+  },
+
+  'callbacks will be given data and response objects': function (test) {
+    test.expect(3);
+    ['error', 'response', 'body'].forEach(function (part) {
+      test.equal(
+        grunt.file.read('tmp/callback.' + part),
+        grunt.file.read('test/fixtures/callback.' + part)
+      );
+    });
     test.done();
   }
 
