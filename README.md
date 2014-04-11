@@ -4,6 +4,8 @@
 
 [![NPM](https://nodei.co/npm/grunt-http.png)](https://nodei.co/npm/grunt-http)
 
+[![NPM](https://nodei.co/npm-dl/grunt-http.png)](https://nodei.co/npm/grunt-http)
+
 ## Getting Started
 This plugin requires Grunt `~0.4.1`
 
