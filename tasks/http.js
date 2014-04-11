@@ -14,7 +14,7 @@ var request = require('request'),
 
 module.exports = function (grunt) {
 
-  function responseHandler(dest, ignoreErrors, done) {
+  function responseHandler(dest, ignoreErrors, callback, done) {
     return function (error, response, body) {
 
       response = response || { statusCode: 0 };
@@ -34,7 +34,11 @@ module.exports = function (grunt) {
         grunt.file.write(dest, body);
       }
 
-      done(error, response, body);
+      if (callback) {
+        callback(error, response, body);
+      }
+
+      done();
     };
   }
 
@@ -81,7 +85,7 @@ module.exports = function (grunt) {
       var r, callback, form;
       file = file || {};
       configureSource(file);
-      callback = responseHandler(file.dest, options.ignoreErrors, next);
+      callback = responseHandler(file.dest, options.ignoreErrors, options.callback, next);
       r = request(options, callback);
       if (formCallback) {
         form = r.form();
@@ -89,10 +93,7 @@ module.exports = function (grunt) {
       }
     }
 
-    function resolve(err, response, body) {
-      if (callback) {
-        callback(err, response, body);
-      }
+    function resolve(err) {
       if (err) {
         grunt.fail.fatal(err);
       }
