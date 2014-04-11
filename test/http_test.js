@@ -33,8 +33,8 @@ exports.http = {
   },
 
   'callbacks will be given data and response objects': function (test) {
-    test.expect(3);
-    ['error', 'response', 'body'].forEach(function (part) {
+    test.expect(2);
+    ['error', 'body'].forEach(function (part) {
       test.equal(
         grunt.file.read('tmp/callback.' + part),
         grunt.file.read('test/fixtures/callback.' + part)
