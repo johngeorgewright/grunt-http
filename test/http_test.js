@@ -41,6 +41,14 @@ exports.http = {
       );
     });
     test.done();
+  },
+
+  'JSON at runtime': function (test) {
+    test.expect(1);
+    test.ok(
+      grunt.file.read('tmp/bodyAtRuntime.txt').match('Post body was 23 chars long.')
+    );
+    test.done();
   }
 
 };
