@@ -85,6 +85,12 @@ module.exports = function (grunt) {
       var r, callback, form;
       file = file || {};
       configureSource(file);
+      if (typeof(options.body) === 'function') {
+        options.body = options.body();
+      }
+      if (typeof(options.json) === 'function') {
+        options.json = options.json();
+      }
       callback = responseHandler(file.dest, options.ignoreErrors, options.callback, next);
       r = request(options, callback);
       if (formCallback) {
