@@ -50,11 +50,11 @@ grunt-http uses the [request](https://github.com/mikeal/request) module under th
 - `qs` - object containing querystring values to be appended to the uri
 - `method` - http method, defaults to GET
 - `headers` - http headers, defaults to {}
-- `body` - entity body for PATCH, POST and PUT requests. Must be buffer or string.
+- `body` - entity body for PATCH, POST and PUT requests. Must be buffer or string or a function returning a string or buffer.
 - `sourceField` - A field in the body or form to add the source files' contents to. Can contain full stops to separate object path. Ie "form.js\_code".
 - `form` - When passed an object, this sets body to a querystring representation of value, and adds Content-type: application/x-www-form-urlencoded; charset=utf-8 header. When passed no options, a FormData instance is returned (and is piped to request). For `multipart/form-data` install the optional dependency `npm i form-data`.
 - `auth` - A hash containing values user || username, password || pass, and sendImmediately (optional). [See more info here](https://github.com/mikeal/request#http-authentication).
-- `json` - sets body but to JSON representation of value and adds Content-type: application/json header. Additionally, parses the response body as json.
+- `json` - sets body but to JSON representation of value and adds Content-type: application/json header. Additionally, parses the response body as json. Must be buffer or string or a function returning a string or buffer.
 - `multipart` - (experimental) array of objects which contains their own headers and body attribute. Sends multipart/related request. See example below.
 - `followRedirect` - follow HTTP 3xx responses as redirects. defaults to true.
 - `followAllRedirects` - follow non-GET HTTP 3xx responses as redirects. defaults to false.
