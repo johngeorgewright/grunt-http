@@ -45,13 +45,13 @@ If you add a source file, the contents will be added to the `body` option unless
 
 grunt-http uses the [request](https://github.com/mikeal/request) module under the hood, and apart from a couple specific to grunt-http options, the rest get passed straight to it. Here's a copy of the of the module's option docs. Otherwise, [go to the repo](https://github.com/mikeal/request) and have a look at what's it's capable of.
 
-- `uri || url` - fully qualified uri or a parsed url object from url.parse(). REQUIRED.
+- `uri || url` - fully qualified URI or a parsed URL object from url.parse(). REQUIRED.
 - `callback` - A function that will receive an `error`, `response` and `body`, after a response if finished
-- `qs` - object containing querystring values to be appended to the uri
+- `qs` - object containing querystring values to be appended to the URI
 - `method` - http method, defaults to GET
 - `headers` - http headers, defaults to {}
 - `body` - entity body for PATCH, POST and PUT requests. Must be buffer or string or a function returning a string or buffer.
-- `sourceField` - A field in the body or form to add the source files' contents to. Can contain full stops to separate object path. Ie "form.js\_code".
+- `sourceField` - A field in the body or form to add the source files' contents to. Can contain full stops to separate object path. IE "form.js\_code".
 - `form` - When passed an object, this sets body to a querystring representation of value, and adds Content-type: application/x-www-form-urlencoded; charset=utf-8 header. When passed no options, a FormData instance is returned (and is piped to request). For `multipart/form-data` install the optional dependency `npm i form-data`.
 - `auth` - A hash containing values user || username, password || pass, and sendImmediately (optional). [See more info here](https://github.com/mikeal/request#http-authentication).
 - `json` - sets body but to JSON representation of value and adds Content-type: application/json header. Additionally, parses the response body as json. Must be buffer or string or a function returning a string or buffer.
@@ -131,6 +131,33 @@ grunt.initConfig({
   }
 });
 ```
+
+#### Multiple target
+This is just a reminder of how to use Grunt's multiple task syntax which is also available in `grunt-http`. If you want to specify more than one task you can list them like so:
+
+```js
+grunt.initConfig({
+  http: {
+    myFirstService: {
+      options: {
+        url: 'http://my-first-url.com'
+      }
+    },
+    mySecondService: {
+      options: {
+        url: 'http://my-second-url.com'
+      }
+    },
+    myThirdService: {
+      options: {
+        url: 'http://my-third-url.com'
+      }
+    }
+  }
+});
+```
+
+With the above configuration you can call all 3 services with one command `grunt http`. Or, if you just want to call one; `grunt http:mySecondService`.
 
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
