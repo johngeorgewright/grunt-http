@@ -30,10 +30,10 @@
   "devDependencies": {
     "form-data": "^0.1.2",
     "grunt": "~0.4.1",
-    "grunt-contrib-clean": "~0.4.0",
-    "grunt-contrib-jshint": "~0.1.1",
-    "grunt-contrib-nodeunit": "~0.1.2",
-    "sinon": "~1.7.2"
+    "grunt-contrib-clean": "~0.6.0",
+    "grunt-contrib-jshint": "~0.10.0",
+    "grunt-contrib-nodeunit": "~0.4.1",
+    "sinon": "~1.10.3"
   },
   "peerDependencies": {
     "grunt": "~0.4.1"
@@ -44,16 +44,16 @@
     "http"
   ],
   "dependencies": {
-    "async": "^0.6.2",
+    "async": "^0.9.0",
     "request": "~2.42.0"
   },
   "optionalDependencies": {
     "tough-cookie": ">=0.12.0",
     "form-data": "~0.1.0",
-    "tunnel-agent": "~0.3.0",
+    "tunnel-agent": "~0.4.0",
     "http-signature": "~0.10.0",
-    "oauth-sign": "~0.3.0",
-    "hawk": "~1.0.0",
+    "oauth-sign": "~0.4.0",
+    "hawk": "~2.3.0",
     "aws-sign2": "~0.5.0"
   }
 }
