@@ -57,11 +57,19 @@ module.exports = function(grunt) {
           'tmp/compiled.js': 'test/fixtures/not-compiled.js'
         }
       },
-      bodyAtRuntime: {
+      jsonAtRuntime: {
         options: {
           url: 'http://posttestserver.com/post.php?dir=grunt-http',
           method: 'POST',
           json: function () { return '{"cheese": "its"}'; }
+        },
+        dest: 'tmp/jsonAtRuntime.txt'
+      },
+      bodyAtRuntime: {
+        options: {
+          url: 'http://posttestserver.com/post.php?dir=grunt-http',
+          method: 'POST',
+          body: function () { return 'mungface'; }
         },
         dest: 'tmp/bodyAtRuntime.txt'
       },
