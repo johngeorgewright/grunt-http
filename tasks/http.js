@@ -76,8 +76,6 @@ module.exports = function (grunt) {
     function configureSource(file) {
       if (file.src) {
         sourceObj[sourceKey] = file.src;
-      } else if (sourceObj[sourceKey]) {
-        delete sourceObj[sourceKey];
       }
     }
 
