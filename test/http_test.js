@@ -46,7 +46,15 @@ exports.http = {
   'JSON at runtime': function (test) {
     test.expect(1);
     test.ok(
-      grunt.file.read('tmp/bodyAtRuntime.txt').match('Post body was 23 chars long.')
+      grunt.file.read('tmp/jsonAtRuntime.txt').match('Post body was 23 chars long.')
+    );
+    test.done();
+  },
+
+  'body at runtime': function (test) {
+    test.expect(1);
+    test.ok(
+      grunt.file.read('tmp/bodyAtRuntime.txt').match('Post body was 8 chars long.')
     );
     test.done();
   }
