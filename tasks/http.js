@@ -28,7 +28,9 @@ module.exports = function (grunt) {
       }
 
       grunt.log.ok(response.statusCode);
-      grunt.verbose.writeln(body);
+      if (grunt.option("logBody")) {
+        grunt.log.writeln(body);
+      }
 
       if (dest) {
         grunt.file.write(dest, body);
