@@ -14,7 +14,7 @@ var request = require('request'),
 
 module.exports = function (grunt) {
 
-  function responseHandler(dest, ignoreErrors, callback, done) {
+  function responseHandler(dest, ignoreErrors, suppressStatusCode, callback, done) {
     return function (error, response, body) {
 
       response = response || { statusCode: 0 };
@@ -27,7 +27,9 @@ module.exports = function (grunt) {
         return done(response.statusCode + " " + body);
       }
 
-      grunt.log.ok(response.statusCode);
+      if (!suppressStatusCode) {
+        grunt.log.ok(response.statusCode);
+      }
       if (grunt.option("logBody")) {
         grunt.log.writeln(body);
       }
@@ -52,6 +54,7 @@ module.exports = function (grunt) {
 
     var options = this.options({
           ignoreErrors: false,
+          suppressStatusCode: false,
           sourceField: 'body'
         }),
         done = this.async(),
@@ -91,7 +94,7 @@ module.exports = function (grunt) {
       if (typeof(options.json) === 'function') {
         options.json = options.json();
       }
-      callback = responseHandler(file.dest, options.ignoreErrors, options.callback, next);
+      callback = responseHandler(file.dest, options.ignoreErrors, options.suppressStatusCode, options.callback, next);
       r = request(options, callback);
       if (formCallback) {
         form = r.form();
