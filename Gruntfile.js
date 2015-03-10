@@ -41,6 +41,17 @@ module.exports = function(grunt) {
         },
         dest: 'tmp/basic.html'
       },
+      justLog: {
+        options: {
+          url: 'http://www.j-g-w.info',
+          logBody: true
+        }
+      },
+      noSaveOrLog: {
+        options: {
+          url: 'http://www.j-g-w.info'
+        }
+      },
       closure: {
         options: {
           form: {
@@ -105,7 +116,7 @@ module.exports = function(grunt) {
 
     // Unit tests.
     nodeunit: {
-      tests: ['test/*_test.js'],
+      tests: ['test/*_test.js']
     },
 
   });

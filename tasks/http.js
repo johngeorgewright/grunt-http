@@ -14,7 +14,7 @@ var request = require('request'),
 
 module.exports = function (grunt) {
 
-  function responseHandler(dest, ignoreErrors, callback, done) {
+  function responseHandler(dest, ignoreErrors, logBody, callback, done) {
     return function (error, response, body) {
 
       response = response || { statusCode: 0 };
@@ -28,7 +28,7 @@ module.exports = function (grunt) {
       }
 
       grunt.log.ok(response.statusCode);
-      if (grunt.option("logBody")) {
+      if (logBody) {
         grunt.log.writeln(body);
       }
 
@@ -52,9 +52,11 @@ module.exports = function (grunt) {
 
     var options = this.options({
           ignoreErrors: false,
-          sourceField: 'body'
+          sourceField: 'body',
+          logBody: false
         }),
         done = this.async(),
+        logBody = grunt.option("logBody") || options.logBody,
         sourceField = options.sourceField,
         sourcePath = sourceField.split('.'),
         sourceKey = sourcePath.pop(),
@@ -91,7 +93,7 @@ module.exports = function (grunt) {
       if (typeof(options.json) === 'function') {
         options.json = options.json();
       }
-      callback = responseHandler(file.dest, options.ignoreErrors, options.callback, next);
+      callback = responseHandler(file.dest, options.ignoreErrors, logBody, options.callback, next);
       r = request(options, callback);
       if (formCallback) {
         form = r.form();

@@ -72,6 +72,7 @@ grunt-http uses the [request](https://github.com/mikeal/request) module under th
 - `httpSignature` - Options for the [HTTP Signature Scheme](https://github.com/joyent/node-http-signature/blob/master/http_signing.md) using [Joyent's library](https://github.com/joyent/node-http-signature). The `http-signature` module must be installed and the keyId and key properties must be specified.
 - `localAddress` - Local interface to bind for network connections.
 - `ignoreErrors` - Ignore the status code returned (if any).
+- `logBody` - Outputs the response body in the logs.  This can also be set at runtime by using --logBody=true on the command.
 
 There are a few optional dependencies you'll need to install to get certain functionality from this module.
 
