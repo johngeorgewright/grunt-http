@@ -7,8 +7,8 @@ exports.http = {
   'it can fetch something just using a destination': function (test) {
     test.expect(1);
     test.equal(
-      grunt.file.read('tmp/basic.html'),
-      grunt.file.read('test/fixtures/basic.html'),
+      grunt.file.read('tmp/basic.html').replace(/\s+/g, ''),
+      grunt.file.read('test/fixtures/basic.html').replace(/\s+/g, ''),
       'different content to what\'s been downloaded'
     );
     test.done();
@@ -17,8 +17,8 @@ exports.http = {
   'it should have downloaded compiled code from the closure service': function (test) {
     test.expect(1);
     test.equal(
-      grunt.file.read('tmp/compiled.js'),
-      grunt.file.read('test/fixtures/compiled.js'),
+      grunt.file.read('tmp/compiled.js').trim(),
+      grunt.file.read('test/fixtures/compiled.js').trim(),
       'different content to what\'s been downloaded'
     );
     test.done();
@@ -36,8 +36,8 @@ exports.http = {
     test.expect(2);
     ['error', 'body'].forEach(function (part) {
       test.equal(
-        grunt.file.read('tmp/callback.' + part),
-        grunt.file.read('test/fixtures/callback.' + part)
+        grunt.file.read('tmp/callback.' + part).trim(),
+        grunt.file.read('test/fixtures/callback.' + part).trim()
       );
     });
     test.done();
@@ -60,4 +60,3 @@ exports.http = {
   }
 
 };
-
