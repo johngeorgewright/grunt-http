@@ -37,19 +37,19 @@ module.exports = function(grunt) {
     http: {
       basic: {
         options: {
-          url: 'http://www.j-g-w.info'
+          url: 'http://blog.j-g-w.info'
         },
         dest: 'tmp/basic.html'
       },
       justLog: {
         options: {
-          url: 'http://www.j-g-w.info',
+          url: 'http://blog.j-g-w.info',
           logBody: true
         }
       },
       noSaveOrLog: {
         options: {
-          url: 'http://www.j-g-w.info'
+          url: 'http://blog.j-g-w.info'
         }
       },
       closure: {
@@ -104,7 +104,7 @@ module.exports = function(grunt) {
       },
       callback: {
         options: {
-          url: 'http://www.j-g-w.info',
+          url: 'http://blog.j-g-w.info',
           callback: function (error, response, body) {
             grunt.file.write('tmp/callback.error', util.inspect(error));
             grunt.file.write('tmp/callback.response', util.inspect(response));

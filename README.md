@@ -50,31 +50,74 @@ grunt-http uses the [request](https://github.com/mikeal/request) module under th
 - `qs` - object containing querystring values to be appended to the URI
 - `method` - http method, defaults to GET
 - `headers` - http headers, defaults to {}
-- `body` - entity body for PATCH, POST and PUT requests. Must be buffer or string or a function returning a string or buffer.
+
+---
+- `qs` - object containing querystring values to be appended to the uri
+- `qsParseOptions` - object containing options to pass to the [qs.parse](https://github.com/hapijs/qs#parsing-objects) method. Alternatively pass options to the [querystring.parse](https://nodejs.org/docs/v0.12.0/api/querystring.html#querystring_querystring_parse_str_sep_eq_options) method using this format {sep:';', eq:':', options:{}}
+- `qsStringifyOptions` - object containing options to pass to the [qs.stringify](https://github.com/hapijs/qs#stringifying) method. Alternatively pass options to the [querystring.stringify](https://nodejs.org/docs/v0.12.0/api/querystring.html#querystring_querystring_stringify_obj_sep_eq_options) method using this format {sep:';', eq:':', options:{}}. For example, to change the way arrays are converted to query strings using the qs module pass the arrayFormat option with one of indices|brackets|repeat
+- `useQuerystring` - If true, use querystring to stringify and parse querystrings, otherwise use qs (default: false). Set this option to true if you need arrays to be serialized as foo=bar&foo=baz instead of the default foo[0]=bar&foo[1]=baz.
+
+---
+
+- `body` - entity body for PATCH, POST and PUT requests. Must be a Buffer or String, unless json is true. If json is true, then body must be a JSON-serializable object.
 - `sourceField` - A field in the body or form to add the source files' contents to. Can contain full stops to separate object path. IE "form.js\_code".
 - `form` - When passed an object, this sets body to a querystring representation of value, and adds Content-type: application/x-www-form-urlencoded; charset=utf-8 header. When passed no options, a FormData instance is returned (and is piped to request). For `multipart/form-data` install the optional dependency `npm i form-data`.
-- `auth` - A hash containing values user || username, password || pass, and sendImmediately (optional). [See more info here](https://github.com/mikeal/request#http-authentication).
+- `formData` - Data to pass for a multipart/form-data
+- `multipart` - array of objects which contain their own headers and body attributes. Sends a multipart/related request.
+  - Alternatively you can pass in an object `{chunked: false, data: []}` where chunked is used to specify whether the request is sent in [chunked transfer encoding](https://en.wikipedia.org/wiki/Chunked_transfer_encoding) In non-chunked requests, data items with body streams are not allowed.
+- `reambleCRLF` - append a newline/CRLF before the boundary of your multipart/form-data request.
+- `postambleCRLF` - append a newline/CRLF at the end of the boundary of your multipart/form-data request.
 - `json` - sets body but to JSON representation of value and adds Content-type: application/json header. Additionally, parses the response body as json. Must be buffer or string or a function returning a string or buffer.
-- `multipart` - (experimental) array of objects which contains their own headers and body attribute. Sends multipart/related request. See example below.
+- `jsonReviver` - a [reviver function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse) that will be passed to JSON.parse() when parsing a JSON response body.
+
+---
+
+- `auth` - A hash containing values user || username, password || pass, and sendImmediately (optional). [See more info here](https://github.com/mikeal/request#http-authentication).
+- `oauth` - Options for OAuth HMAC-SHA1 signing. [See more info here](https://github.com/mikeal/request#oauth-signing). The `oauth-sign` module must be installed to use this functionality.
+- `hawk` - Options for [Hawk signing](https://github.com/hueniverse/hawk). The credentials key must contain the necessary signing info, [see hawk docs for details](https://github.com/hueniverse/hawk#usage-example). You will need to install the `hawk` module to use this functionality.
+- `aws` - object containing AWS signing information. Should have the properties key, secret. Also requires the property bucket, unless you’re specifying your bucket as part of the path, or the request doesn’t use a bucket (i.e. GET Services)
+- `httpSignature` - Options for the [HTTP Signature Scheme](https://github.com/joyent/node-http-signature/blob/master/http_signing.md) using [Joyent's library](https://github.com/joyent/node-http-signature). The `http-signature` module must be installed and the keyId and key properties must be specified.
+
+---
+
 - `followRedirect` - follow HTTP 3xx responses as redirects. defaults to true.
 - `followAllRedirects` - follow non-GET HTTP 3xx responses as redirects. defaults to false.
 - `maxRedirects` - the maximum number of redirects to follow, defaults to 10.
-- `encoding` - Encoding to be used on setEncoding of response data. If set to null, the body is returned as a Buffer.
-- `pool` - A hash object containing the agents for these requests. If omitted this request will use the global pool which is set to node's default maxSockets.
-- `pool.maxSockets` - Integer containing the maximum amount of sockets in the pool.
-- `timeout` - Integer containing the number of milliseconds to wait for a request to respond before aborting the request
-- `proxy` - An HTTP proxy to be used. Support proxy Auth with Basic Auth the same way it's supported with the url parameter by embedding the auth info in the uri.
-- `oauth` - Options for OAuth HMAC-SHA1 signing. [See more info here](https://github.com/mikeal/request#oauth-signing). The `oauth-sign` module must be installed to use this functionality.
-- `hawk` - Options for [Hawk signing](https://github.com/hueniverse/hawk). The credentials key must contain the necessary signing info, [see hawk docs for details](https://github.com/hueniverse/hawk#usage-example). You will need to install the `hawk` module to use this functionality.
-- `strictSSL` - Set to true to require that SSL certificates be valid. Note: to use your own certificate authority, you need to specify an agent that was created with that ca as an option.
-- `jar` - If true, remember cookies for future use (or define your custom cookie jar; [see mikeal/request's examples](https://github.com/mikeal/request#examples)). To get either of these functions working you'll need to install an optional dependecy `npm i tough-cookie`.
-- `aws` - object containing aws signing information, should have the properties key and secret as well as bucket unless you're specifying your bucket as part of the path, or you are making a request that doesn't use a bucket (i.e. GET Services). You will need to install the `aws-sign2` module to use this functionality.
-- `httpSignature` - Options for the [HTTP Signature Scheme](https://github.com/joyent/node-http-signature/blob/master/http_signing.md) using [Joyent's library](https://github.com/joyent/node-http-signature). The `http-signature` module must be installed and the keyId and key properties must be specified.
-- `localAddress` - Local interface to bind for network connections.
-- `ignoreErrors` - Ignore the status code returned (if any).
-- `logBody` - Outputs the response body in the logs.  This can also be set at runtime by using --logBody=true on the command.
+- `removeRefererHeader` - removes the referer header when a redirect happens (default: false). Note: if true, referer header set in the initial request is preserved during redirect chain.
 
+---
+
+- `encoding` - Encoding to be used on setEncoding of response data. If set to null, the body is returned as a Buffer.
+- `gzip` - If true, add an Accept-Encoding header to request compressed content encodings from the server (if not already present) and decode supported content encodings in the response. Note: Automatic decoding of the response content is performed on the body data returned through request (both through the request stream and passed to the callback function) but is not performed on the response stream (available from the response event) which is the unmodified http.IncomingMessage object which may contain compressed data. See example below.
+- `jar` - If true, remember cookies for future use (or define your custom cookie jar; [see mikeal/request's examples](https://github.com/mikeal/request#examples)). To get either of these functions working you'll need to install an optional dependecy `npm i tough-cookie`.
+
+---
+
+- `agent` - http(s).Agent instance to use
+- `agentClass` - alternatively specify your agent's class name
+- `agentOptions` - and pass its options. Note: for HTTPS see [tls API doc for TLS/SSL options](http://nodejs.org/api/tls.html#tls_tls_connect_options_callback) and the [request.js docs](https://github.com/request/request#using-optionsagentoptions)
+- `pool` - An object describing which agents to use for the request. If this option is omitted the request will use the global agent (as long as your options allow for it). Otherwise, request will search the pool for your custom agent. If no custom agent is found, a new agent will be created and added to the pool. Note: pool is used only when the agent option is not specified.
+  - A maxSockets property can also be provided on the pool object to set the max number of sockets for all agents created (ex: pool: {maxSockets: Infinity}).
+  - Note that if you are sending multiple requests in a loop and creating multiple new pool objects, maxSockets will not work as intended. To work around this, either use request.defaults with your pool options or create the pool object with the maxSockets property outside of the loop.
+- `timeout` - Integer containing the number of milliseconds to wait for a request to respond before aborting the request
+
+---
+
+- `localAddress` - Local interface to bind for network connections.
+- `proxy` - An HTTP proxy to be used. Support proxy Auth with Basic Auth the same way it's supported with the url parameter by embedding the auth info in the uri.
+- `strictSSL` - Set to true to require that SSL certificates be valid. Note: to use your own certificate authority, you need to specify an agent that was created with that ca as an option.
+- `tunnel` - controls the behavior of [HTTP CONNECT tunneling](https://en.wikipedia.org/wiki/HTTP_tunnel#HTTP_CONNECT_tunneling) as follows:
+  - `undefined` (default) - true if the destination is https, false otherwise
+  - `true` - always tunnel to the destination by making a CONNECT request to the proxy
+  - `false` - request the destination as a GET request.
+- `proxyHeaderWhiteList` - A whitelist of headers to send to a tunneling proxy.
+- `proxyHeaderExclusiveList` - A whitelist of headers to send exclusively to a tunneling proxy and not to destination.
 There are a few optional dependencies you'll need to install to get certain functionality from this module.
+
+---
+
+- `time` - If true, the request-response cycle (including all redirects) is timed at millisecond resolution, and the result provided on the response's elapsedTime property.
+- `har` - A [HAR 1.2 Request Object](http://www.softwareishard.com/blog/har-12-spec/#request), will be processed from HAR format into options overwriting matching values (see the [HAR 1.2 section](https://github.com/request/request#support-for-har-1.2) for details)
 
 - if you wish to use cookies (`jar`) install `tough-cookie`
 - if you want to pass `multipart/form-data` you'll need to install `form-data`
@@ -164,4 +207,3 @@ With the above configuration you can call all 3 services with one command `grunt
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## [Release History](/johngeorgewright/grunt-http/releases)
-
