@@ -7,8 +7,8 @@ exports.http = {
   'it can fetch something just using a destination': function (test) {
     test.expect(1);
     test.equal(
-      grunt.file.read('tmp/basic.html').replace(/\s+/g, ''),
-      grunt.file.read('test/fixtures/basic.html').replace(/\s+/g, ''),
+      grunt.file.read('tmp/basic.html').replace(/\s+/g, '').replace(/\\+/g, ''),
+      grunt.file.read('test/fixtures/basic.html').replace(/\s+/g, '').replace(/\\+/g, ''),
       'different content to what\'s been downloaded'
     );
     test.done();
@@ -36,8 +36,9 @@ exports.http = {
     test.expect(2);
     ['error', 'body'].forEach(function (part) {
       test.equal(
-        grunt.file.read('tmp/callback.' + part).trim(),
-        grunt.file.read('test/fixtures/callback.' + part).trim()
+        grunt.file.read('tmp/callback.' + part).replace(/\s+/g, '').replace(/\\+/g, ''),
+        grunt.file.read('test/fixtures/callback.' + part).replace(/\s+/g, '').replace(/\\+/g, ''),
+        'different content to what\'s been downloaded'
       );
     });
     test.done();

@@ -55,7 +55,7 @@ module.exports = function (grunt) {
 
     var options = this.options({
           ignoreErrors: false,
-          logBody: false
+          logBody: false,
           suppressStatusCode: false,
           sourceField: 'body'
         }),
@@ -138,4 +138,3 @@ module.exports = function (grunt) {
   });
 
 };
-
