@@ -45,7 +45,7 @@
   ],
   "dependencies": {
     "async": "^1.5.0",
-    "request": "~2.67.0"
+    "request": "^2.83.0"
   },
   "optionalDependencies": {
     "tough-cookie": ">=0.12.0",
