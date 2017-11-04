@@ -26,36 +26,39 @@ exports.http = {
 
   'it can post multipart': function (test) {
     test.expect(1);
-    test.ok(
-      grunt.file.read('tmp/multipart.txt').match('Successfully dumped 2 post variables')
+    test.equal(
+      JSON.parse(grunt.file.read('tmp/multipart.txt')).headers['Content-Length'],
+      793731
     );
     test.done();
   },
 
-  'callbacks will be given data and response objects': function (test) {
-    test.expect(2);
-    ['error', 'body'].forEach(function (part) {
-      test.equal(
-        grunt.file.read('tmp/callback.' + part).replace(/\s+/g, '').replace(/\\+/g, ''),
-        grunt.file.read('test/fixtures/callback.' + part).replace(/\s+/g, '').replace(/\\+/g, ''),
-        'different content to what\'s been downloaded'
-      );
-    });
-    test.done();
-  },
+  // 'callbacks will be given data and response objects': function (test) {
+  //   test.expect(2);
+  //   ['error', 'body'].forEach(function (part) {
+  //     test.equal(
+  //       grunt.file.read('tmp/callback.' + part).replace(/\s+/g, '').replace(/\\+/g, ''),
+  //       grunt.file.read('test/fixtures/callback.' + part).replace(/\s+/g, '').replace(/\\+/g, ''),
+  //       'different content to what\'s been downloaded'
+  //     );
+  //   });
+  //   test.done();
+  // },
 
   'JSON at runtime': function (test) {
     test.expect(1);
-    test.ok(
-      grunt.file.read('tmp/jsonAtRuntime.txt').match('Post body was 23 chars long.')
+    test.equal(
+      JSON.parse(grunt.file.read('tmp/jsonAtRuntime.txt')).headers['Content-Length'],
+      19
     );
     test.done();
   },
 
   'body at runtime': function (test) {
     test.expect(1);
-    test.ok(
-      grunt.file.read('tmp/bodyAtRuntime.txt').match('Post body was 8 chars long.')
+    test.equal(
+      JSON.parse(grunt.file.read('tmp/bodyAtRuntime.txt')).headers['Content-Length'],
+      8
     );
     test.done();
   }

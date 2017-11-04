@@ -37,19 +37,19 @@ module.exports = function(grunt) {
     http: {
       basic: {
         options: {
-          url: 'http://blog.j-g-w.info'
+          url: 'https://closure-compiler.appspot.com/home'
         },
         dest: 'tmp/basic.html'
       },
       justLog: {
         options: {
-          url: 'http://blog.j-g-w.info',
+          url: 'https://closure-compiler.appspot.com/home',
           logBody: true
         }
       },
       noSaveOrLog: {
         options: {
-          url: 'http://blog.j-g-w.info'
+          url: 'https://closure-compiler.appspot.com/home'
         }
       },
       closure: {
@@ -60,7 +60,7 @@ module.exports = function(grunt) {
             compilation_level: 'SIMPLE_OPTIMIZATIONS',
             warning_level: 'default',
           },
-          url: 'http://closure-compiler.appspot.com/compile',
+          url: 'https://closure-compiler.appspot.com/compile',
           method: 'POST',
           sourceField: 'form.js_code'
         },
@@ -70,15 +70,15 @@ module.exports = function(grunt) {
       },
       jsonAtRuntime: {
         options: {
-          url: 'http://posttestserver.com/post.php?dir=grunt-http',
+          url: 'https://httpbin.org/post',
           method: 'POST',
-          json: function () { return '{"cheese": "its"}'; }
+          json: function () { return {cheese: 'please'}; }
         },
         dest: 'tmp/jsonAtRuntime.txt'
       },
       bodyAtRuntime: {
         options: {
-          url: 'http://posttestserver.com/post.php?dir=grunt-http',
+          url: 'https://httpbin.org/post',
           method: 'POST',
           body: function () { return 'mungface'; }
         },
@@ -93,7 +93,7 @@ module.exports = function(grunt) {
       },
       multipart: {
         options: {
-          url: 'http://posttestserver.com/post.php?dir=grunt-http',
+          url: 'https://httpbin.org/post',
           method: 'POST',
           form: function (form) {
             form.append('buffer', new Buffer([1, 2, 3]));
@@ -104,7 +104,7 @@ module.exports = function(grunt) {
       },
       callback: {
         options: {
-          url: 'http://blog.j-g-w.info',
+          url: 'https://closure-compiler.appspot.com/home',
           callback: function (error, response, body) {
             grunt.file.write('tmp/callback.error', util.inspect(error));
             grunt.file.write('tmp/callback.response', util.inspect(response));
