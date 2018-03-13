@@ -5,3 +5,6 @@ before_script:
 - greenkeeper-lockfile-update
 after_script:
 - greenkeeper-lockfile-upload
+env:
+  global:
+    secure: B/j8+/WbeHbRn+eyX/3jkDQLYzQ1Hssg/N11Ei6YzQfGDkvamF+TCu7eeC584b8gFbzD/w0mr5+ngoNLXgYuA06Ludadp7973FqisMUlNH1vWyuHjLtffVW4ct5iFSQjtAMfuvKq2XzqnqHsW291Ef7dRx1oQFuIN2/GYcLkD8M=
