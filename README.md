@@ -1,5 +1,7 @@
 # grunt-http
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/johngeorgewright/grunt-http.svg)](https://greenkeeper.io/)
+
 > Sends a HTTP request and deals with the response.
 
 [![NPM](https://nodei.co/npm/grunt-http.png)](https://nodei.co/npm/grunt-http)
