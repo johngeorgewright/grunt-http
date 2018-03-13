@@ -1,7 +1,7 @@
 {
   "name": "grunt-http",
   "description": "Sends a HTTP request and deals with the response.",
-  "version": "2.3.0",
+  "version": "2.3.1",
   "homepage": "https://github.com/johngeorgewright/grunt-http",
   "author": {
     "name": "John Wright",
