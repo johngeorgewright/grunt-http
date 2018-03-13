@@ -36,7 +36,10 @@ module.exports = function (grunt) {
       }
 
       if (dest) {
-        grunt.file.write(dest, body);
+        grunt.file.write(
+          dest,
+          typeof body === 'object' ? JSON.stringify(body) : body
+        );
       }
 
       if (callback) {
