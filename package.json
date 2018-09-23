@@ -31,7 +31,7 @@
     "form-data": "^2.3.2",
     "grunt": "^1.0.3",
     "grunt-contrib-clean": "^2.0.0",
-    "grunt-contrib-jshint": "^1.1.0",
+    "grunt-contrib-jshint": "^2.0.0",
     "grunt-contrib-nodeunit": "^2.0.0",
     "sinon": "^6.0.0"
   },
