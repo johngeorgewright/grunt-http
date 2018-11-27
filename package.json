@@ -48,7 +48,7 @@
     "request": "^2.88.0"
   },
   "optionalDependencies": {
-    "tough-cookie": "^2.3.4",
+    "tough-cookie": "^2.5.0",
     "form-data": "^2.3.2",
     "tunnel-agent": "^0.6.0",
     "http-signature": "^1.2.0",
