@@ -28,7 +28,7 @@ exports.http = {
     test.expect(1);
     test.equal(
       JSON.parse(grunt.file.read('tmp/multipart.txt')).headers['Content-Length'],
-      793731
+      796662
     );
     test.done();
   },
