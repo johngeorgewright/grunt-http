@@ -44,7 +44,7 @@
     "http"
   ],
   "dependencies": {
-    "async": "^2.6.0",
+    "async": "^3.0.1",
     "request": "^2.88.0"
   },
   "optionalDependencies": {
