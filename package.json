@@ -29,11 +29,11 @@
   },
   "devDependencies": {
     "form-data": "^2.3.2",
-    "grunt": "^1.0.3",
+    "grunt": "^1.0.4",
     "grunt-contrib-clean": "^2.0.0",
-    "grunt-contrib-jshint": "^2.0.0",
+    "grunt-contrib-jshint": "^2.1.0",
     "grunt-contrib-nodeunit": "^2.0.0",
-    "sinon": "^7.2.3"
+    "sinon": "^7.3.2"
   },
   "peerDependencies": {
     "grunt": ">=0.4.0"
